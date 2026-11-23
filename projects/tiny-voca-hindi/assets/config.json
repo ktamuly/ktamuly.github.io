@@ -1,0 +1,9 @@
+{
+ "sample_rate": 24000,
+ "voices": [
+  "HI_F1"
+ ],
+ "max_tokens": 512,
+ "step": 105000,
+ "frontend_fingerprint": "c6d627b034d5c07991267f99d78020551d2d5ac2debd6b0fae163e722f4d386d"
+}

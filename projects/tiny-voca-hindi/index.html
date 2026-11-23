@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tiny-voca Hindi</title>
+<meta name="description" content="A 4.5M-parameter Hindi text-to-speech model that runs entirely in your browser.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root { --bg: #ffffff; --fg: #1a1a1a; --muted: #6b6b6b; --rule: #dedede; --link: #5a4208; color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 15px/1.6 "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+main { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding-block: 48px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.field { position: fixed; left: 0; bottom: 0; z-index: 0; width: 100%; height: 260px; image-rendering: pixelated; pointer-events: none; opacity: 0.6; }
+h1 { font-size: 1.35em; line-height: 1.25; margin: 0 0 0.3em; font-weight: 600; text-wrap: balance; }
+nav { margin: 0 0 1.8em; color: var(--muted); }
+.site { margin: 0 0 0.2em; font-weight: 600; }
+.site a { color: var(--fg); text-decoration: none; }
+nav a, nav span { margin-right: 1.1em; }
+nav span { color: var(--fg); font-weight: 600; }
+p { margin: 1.6em 0 0.4em; }
+ul, ol { margin: 0.3em 0; padding-left: 1.5em; }
+li { margin: 0.25em 0; }
+a { color: var(--link); text-underline-offset: 0.18em; }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.when { color: var(--muted); }
+/* article */
+.post h1 { font-size: 1.5em; margin-bottom: 0.4em; }
+.post .dek { margin: 0 0 0.5em; font-style: italic; }
+.post .date { color: var(--muted); margin: 0 0 2em; }
+.post h2 { font-size: 1.2em; line-height: 1.3; margin: 2.4em 0 0.6em; padding-top: 1.4em; border-top: 1px solid var(--rule); }
+.post h3 { font-size: 1.05em; line-height: 1.35; margin: 2em 0 0.5em; }
+.post h4 { font-size: 1em; margin: 1.6em 0 0.4em; color: var(--muted); }
+.post p { margin: 0.9em 0; }
+.post li { margin: 0.45em 0; }
+.post code { background: #f3f1ea; padding: 0.05em 0.3em; border-radius: 3px; overflow-wrap: anywhere; }
+.post ~ .field { opacity: 0.22; height: 170px; }
+figure { margin: 1.6em 0 1.8em; }
+figure svg { display: block; width: 100%; height: auto; font-family: inherit; }
+figcaption { color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 0.7em; }
+.post .figtitle { font-weight: 600; margin: 0 0 0.9em; text-wrap: balance; }
+figure { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 1.2em 0; }
+.scroll { overflow-x: auto; margin: 1.1em 0; }
+table { border-collapse: collapse; font-size: 12.5px; line-height: 1.4; }
+th, td { text-align: left; vertical-align: top; padding: 0.35em 1em 0.35em 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th { font-weight: 600; color: var(--muted); border-bottom-color: #9a9a9a; white-space: normal; min-width: 5em; vertical-align: bottom; }
+td.long { white-space: normal; min-width: 18em; }
+.post .math { text-align: center; margin: 1.4em 0; overflow-x: auto; white-space: nowrap;
+  font: 1.25em/1.6 "STIX Two Text", "Cambria Math", Cambria, "Times New Roman", serif; }
+.post .math sub { font-size: 0.7em; }
+</style>
+</head>
+<body>
+<main class="post demo">
+<p class="site"><a href="../../">Kaustav Tamuly</a></p>
+<nav aria-label="Site"><a href="../../">About</a><a href="../../writing/">Writing</a><a href="../../projects/">Projects</a></nav>
+<style>
+.demo textarea { display: block; width: 100%; min-height: 132px; resize: vertical; border: 1px solid var(--rule); border-radius: 4px;
+  background: #fff; color: inherit; padding: 10px 12px; margin-top: 1.6em;
+  font: 20px/1.6 "Kohinoor Devanagari", "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif; }
+.demo button { font: inherit; cursor: pointer; }
+.demo .examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.demo .examples button { font-size: 13px; color: var(--muted); background: #fff; border: 1px solid var(--rule); border-radius: 4px; padding: 3px 10px; }
+.demo .examples button:hover { color: var(--fg); border-color: var(--muted); }
+.demo .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 18px; }
+.demo .slider { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; }
+.demo .slider input { width: 110px; accent-color: var(--link); }
+.demo .slider output { color: var(--fg); min-width: 5ch; }
+.demo #speak { margin-left: auto; min-width: 7em; font-weight: 600; color: #fff; background: var(--fg); border: 0; border-radius: 4px; padding: 8px 20px; }
+.demo #speak:disabled { opacity: 0.4; cursor: default; }
+.demo #speak:focus-visible, .demo textarea:focus-visible, .demo .examples button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.demo .status { margin-top: 18px; color: var(--muted); font-size: 13px; min-height: 21px; }
+.demo .bar { height: 2px; background: var(--rule); margin-top: 8px; overflow: hidden; }
+.demo .bar i { display: block; height: 100%; width: 0; background: var(--link); transition: width 0.15s; }
+.demo .bar[hidden], .demo .result[hidden] { display: none; }
+.demo .result { margin-top: 22px; }
+.demo audio { display: block; width: 100%; }
+.demo dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0 0; }
+.demo dl div { border-top: 1px solid var(--rule); padding-top: 8px; }
+.demo dt { font-size: 12px; color: var(--muted); }
+.demo dd { margin: 2px 0 0; font-variant-numeric: tabular-nums; }
+.demo details { margin-top: 16px; font-size: 13px; color: var(--muted); }
+.demo details pre { white-space: pre-wrap; word-break: break-word; font: inherit; color: var(--fg); margin: 8px 0 0; }
+.demo .note { margin-top: 2.4em; padding-top: 1.4em; border-top: 1px solid var(--rule); }
+.demo .small { color: var(--muted); font-size: 13px; }
+@media (max-width: 560px) {
+  .demo dl { grid-template-columns: repeat(2, 1fr); }
+  .demo #speak { margin-left: 0; width: 100%; }
+}
+</style>
+<h1>tiny-voca Hindi</h1>
+<p>A 4.5M-parameter Hindi text-to-speech model, trained from scratch on synthetic speech. It runs entirely in your browser: nothing you type leaves your device.</p>
+
+<textarea id="text" spellcheck="false" lang="hi" aria-label="Hindi text to speak">नमस्ते! मैं आपकी कैसे मदद कर सकती हूँ?</textarea>
+<div class="examples" id="examples"></div>
+<div class="controls">
+  <label class="slider">Speed <input id="speed" type="range" min="0.7" max="1.4" step="0.05" value="1"><output id="speed-value">1.00</output></label>
+  <label class="slider">Pitch <input id="pitch" type="range" min="-4" max="4" step="1" value="0"><output id="pitch-value">0</output></label>
+  <button id="speak" disabled>Speak</button>
+</div>
+
+<div class="status" id="status" role="status">Loading…</div>
+<div class="bar" id="bar"><i></i></div>
+
+<section class="result" id="result" hidden>
+  <audio id="audio" controls></audio>
+  <dl>
+    <div><dt>Audio</dt><dd id="m-audio">–</dd></div>
+    <div><dt>Time to generate</dt><dd id="m-time">–</dd></div>
+    <div><dt>Speed</dt><dd id="m-speed">–</dd></div>
+    <div><dt>Text to phonemes</dt><dd id="m-phonemes">–</dd></div>
+  </dl>
+  <details><summary>Phonemes the model read</summary><pre id="phonemes"></pre></details>
+</section>
+
+<p class="small note">The first visit downloads the model (21 MB) and a Python runtime for the Hindi front end. Later visits start from the browser's cache. Built on <a href="https://github.com/n4ze3m/tiny-voca">tiny-voca</a>, whose code is under the <a href="LICENSE.txt">Apache-2.0 licence</a>.</p>
+
+<script>
+// Plays the sentences of one request as they arrive. Each one starts on the sample where the one before it
+// ends, so there is no gap between them. `context` is an AudioContext; changed() is called whenever `playing`
+// may have changed.
+function livePlayer(context, changed = () => {}) {
+  // A sentence with nothing before it to follow starts this many seconds from now, not at once: the browser then
+  // has it in hand before its first sample is due. Asked to start at once, it can start a few milliseconds late
+  // (measured in Firefox: up to 21 ms), and the next sentence would begin before it has ended.
+  const LEAD = 0.05;
+  const sources = new Set();
+  let open = false;     // more sentences of this request may still come
+  let muted = false;    // the listener stopped this request: its later sentences stay silent
+  let refused = false;  // the browser said no when asked to start the sound
+  let queued = 0;       // sentences of this request handed to the browser
+  let next = 0;         // the context time at which the next sentence starts
+
+  function silence() {
+    for (const source of sources) {
+      source.onended = null;
+      try { source.stop(); } catch (error) { /* an old browser, and the sentence had already ended */ }
+    }
+    sources.clear();
+  }
+
+  return {
+    get playing() { return !muted && (open || sources.size > 0); },
+
+    // A new request. Call it from a click or a key press: browsers let a page start sound only there.
+    begin() {
+      silence();
+      open = true; muted = false; refused = false; queued = 0; next = 0;
+      if (context.state !== "running") Promise.resolve(context.resume()).catch(() => { refused = true; });
+      changed();
+    },
+
+    // Queue one sentence. It starts when the one before it ends, or right away when that moment has passed.
+    add(samples, rate) {
+      if (muted || !samples.length) return;
+      const buffer = context.createBuffer(1, samples.length, rate);
+      buffer.getChannelData(0).set(samples);
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(context.destination);
+      source.onended = () => { sources.delete(source); changed(); };
+      const when = Math.max(next, context.currentTime + LEAD);
+      source.start(when);
+      next = when + samples.length / rate;
+      sources.add(source);
+      queued += 1;
+    },
+
+    // No more sentences will come; the queued ones play to the end. False when there is nothing to hear (no
+    // sentence came, or the browser refused the sound): the caller then plays the whole clip itself. A context
+    // that is only slow to start is not a refusal: a short text can be done before the sound is running, and
+    // its sentences play as soon as it is.
+    end() {
+      open = false;
+      const played = muted || (queued > 0 && !(refused && context.state !== "running"));
+      if (!played) silence();
+      changed();
+      return played;
+    },
+
+    stop() {
+      muted = true; open = false;
+      silence();
+      changed();
+    },
+  };
+}
+</script>
+<script>
+(function () {
+const EXAMPLES = [
+  ["Greeting", "नमस्ते! मैं आपकी कैसे मदद कर सकती हूँ?"],
+  ["Hinglish", "Sorry, मैं थोड़ा late हो गई, रास्ते में बहुत भीड़ थी।"],
+  ["Numbers", "आपका बिल ₹2,450 है, जिसे आप 15 दिसंबर तक online भर सकते हैं।"],
+  ["Time", "आपकी appointment कल सुबह 10:30 बजे है, please पंद्रह मिनट पहले पहुँच जाइए।"],
+  ["Story", "बहुत समय पहले, एक छोटे से गाँव में एक बूढ़ी औरत रहती थी, जो हर सुबह नदी से पानी भरने जाती थी।"],
+  ["Excitement", "अरे वाह! तुमने तो कमाल कर दिया, मुझे तुम पर बहुत गर्व है।"],
+];
+const $ = (id) => document.getElementById(id);
+const worker = new Worker("worker.js");
+let ready = false, busy = false, request = 0, url = null, rate = 0, live = null;
+
+for (const [label, text] of EXAMPLES) {
+  const button = document.createElement("button");
+  button.textContent = label;
+  button.onclick = () => { $("text").value = text; $("text").focus(); update(); };
+  $("examples").append(button);
+}
+$("speed").oninput = () => { $("speed-value").textContent = Number($("speed").value).toFixed(2); };
+$("pitch").oninput = () => { const v = Number($("pitch").value); $("pitch-value").textContent = (v > 0 ? "+" : "") + v; };
+
+function setStatus(text, progress) {
+  $("status").textContent = text;
+  $("bar").hidden = progress == null;
+  if (progress != null) $("bar").firstElementChild.style.width = Math.round(progress * 100) + "%";
+}
+function update() {
+  const playing = live !== null && live.playing;
+  $("speak").textContent = playing ? "Stop" : "Speak";
+  $("speak").disabled = !playing && (!ready || busy || !$("text").value.trim());
+}
+$("text").oninput = update;
+
+function wav(samples, rate) {
+  const buffer = new ArrayBuffer(44 + samples.length * 2);
+  const view = new DataView(buffer);
+  const text = (offset, value) => { for (let i = 0; i < value.length; i++) view.setUint8(offset + i, value.charCodeAt(i)); };
+  text(0, "RIFF"); view.setUint32(4, 36 + samples.length * 2, true); text(8, "WAVEfmt ");
+  view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
+  view.setUint32(24, rate, true); view.setUint32(28, rate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+  text(36, "data"); view.setUint32(40, samples.length * 2, true);
+  for (let i = 0; i < samples.length; i++) view.setInt16(44 + i * 2, Math.max(-1, Math.min(1, samples[i])) * 32767, true);
+  return new Blob([buffer], { type: "audio/wav" });
+}
+
+let phonemes = [];
+worker.onmessage = ({ data }) => {
+  if (data.type === "status") setStatus(data.text, data.progress);
+  else if (data.type === "ready") { ready = true; rate = data.sampleRate; setStatus("Ready. Type Hindi text and press Speak."); update(); }
+  else if (data.type === "sentence" && data.id === request) {
+    phonemes.push(data.phonemes);
+    if (live && data.audio) live.add(data.audio, data.sampleRate);
+    setStatus(`Speaking sentence ${data.index + 1} of ${data.total}`, (data.index + 1) / data.total);
+  } else if (data.type === "done" && data.id === request) {
+    busy = false; update();
+    const seconds = data.audio.length / data.sampleRate;
+    if (url) URL.revokeObjectURL(url);
+    url = URL.createObjectURL(wav(data.audio, data.sampleRate));
+    $("audio").src = url;
+    if (!live || !live.end()) $("audio").play().catch(() => {});
+    $("m-audio").textContent = seconds.toFixed(1) + " s";
+    $("m-time").textContent = (data.totalTime / 1000).toFixed(2) + " s";
+    $("m-speed").textContent = (seconds / (data.totalTime / 1000)).toFixed(1) + "× real time";
+    $("m-phonemes").textContent = Math.round(data.phonemeTime) + " ms";
+    $("phonemes").textContent = phonemes.join("\n");
+    $("result").hidden = false;
+    setStatus("Done.");
+  } else if (data.type === "error") {
+    busy = false;
+    if (live) live.end();
+    update();
+    setStatus(data.plain ? data.message : "Something went wrong: " + data.message);
+  }
+};
+worker.onerror = (event) => setStatus("Could not start: " + event.message);
+
+// Sound has to start inside a click, so the player is made here and not when the first sentence arrives.
+function listen() {
+  const Context = window.AudioContext || window.webkitAudioContext;
+  if (!live && Context) {
+    let context = null;
+    try { context = new Context({ sampleRate: rate }); } catch (error) { try { context = new Context(); } catch (failed) {} }
+    if (context) live = livePlayer(context, update);
+  }
+  $("audio").pause();
+  if (live) live.begin();
+}
+$("audio").onplay = () => { if (live) live.stop(); };
+
+$("speak").onclick = () => {
+  if (live && live.playing) { live.stop(); return; }
+  busy = true; phonemes = [];
+  request += 1;
+  listen();
+  update();
+  setStatus("Speaking…", 0);
+  worker.postMessage({ type: "speak", id: request, text: $("text").value,
+                       speed: Number($("speed").value), pitch: Number($("pitch").value) });
+};
+$("text").addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter" && !$("speak").disabled) $("speak").click();
+});
+
+setStatus("Loading the model and the Hindi front end…");
+worker.postMessage({ type: "load" });
+})();
+</script>
+
+</main>
+<canvas id="field" class="field" aria-hidden="true"></canvas>
+<script>
+// A soft pixel wheat field that sways in the wind. Drawn at half resolution and scaled up without smoothing.
+(function () {
+  var c = document.getElementById("field");
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext("2d"), S = 2, H = 130, MAXW = 2000, W = 0, img, d;
+  var seed = 20261123;
+  function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  // far to near: density per pixel of width, height range, colours (stem, ear, ear edge, awn), how much it moves
+  var LAYERS = [
+    { n: 0.50, h: [44, 74],  stem: [240, 231, 201], ear: [236, 224, 186], edge: [231, 216, 171], awn: [243, 236, 213], sway: 0.75 },
+    { n: 0.42, h: [54, 94],  stem: [232, 217, 166], ear: [226, 206, 145], edge: [218, 195, 126], awn: [237, 224, 181], sway: 0.9 },
+    { n: 0.34, h: [62, 112], stem: [221, 199, 134], ear: [214, 187, 110], edge: [203, 173, 93],  awn: [230, 212, 154], sway: 1.0 }
+  ];
+  var stalks = [];
+  LAYERS.forEach(function (L) {
+    for (var i = 0, n = Math.round(L.n * MAXW); i < n; i++) {
+      stalks.push({
+        L: L, x: rnd() * MAXW, h: L.h[0] + rnd() * (L.h[1] - L.h[0]), stiff: 0.65 + rnd() * 0.7, lag: rnd() * 0.9,
+        ear: 7 + Math.floor(rnd() * 6), droop: 0.15 + rnd() * 0.35,
+        leaf: rnd() < 0.4 ? { at: 0.25 + rnd() * 0.35, len: 5 + Math.floor(rnd() * 6), dir: rnd() < 0.5 ? -1 : 1 } : null
+      });
+    }
+  });
+  var GRASS = { stem: [228, 211, 156], sway: 0.6 }, blades = [];
+  for (var g = 0; g < MAXW * 1.1; g++) blades.push({ x: rnd() * MAXW, h: 5 + rnd() * rnd() * 26, stiff: 0.6 + rnd() * 0.8, lag: rnd() });
+
+  function px(x, y, col) {
+    x = Math.round(x); y = Math.round(y);
+    if (x < 0 || x >= W || y < 0 || y >= H) return;
+    var i = (y * W + x) * 4;
+    d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2]; d[i + 3] = 255;
+  }
+  // Tip displacement as a fraction of height: a steady lean plus gusts that travel across the field.
+  function wind(x, t) {
+    return 0.08 + 0.13 * Math.sin(x * 0.011 - t * 0.8) + 0.06 * Math.sin(x * 0.029 - t * 1.5 + 1.3) + 0.05 * Math.sin(x * 0.0037 - t * 0.3);
+  }
+  function draw(t) {
+    for (var z = 0; z < d.length; z += 4) d[z + 3] = 0;
+    for (var n = 0; n < stalks.length; n++) {
+      var s = stalks[n];
+      if (s.x > W + 30) continue;
+      var L = s.L, w = wind(s.x, t - s.lag) * s.stiff * L.sway, tip = w * s.h, k, f;
+      for (k = 0; k < s.h; k++) { f = k / s.h; px(s.x + tip * f * f, H - 1 - k, L.stem); }   // the stem bends more toward the top
+      if (s.leaf) {
+        f = s.leaf.at;
+        var lx = s.x + tip * f * f, ly = H - 1 - f * s.h, m = s.leaf.len;
+        for (k = 1; k <= m; k++) px(lx + s.leaf.dir * k + w * k * 0.5, ly - Math.sin(k / m * 2.4) * m * 0.45, L.stem);
+      }
+      var x0 = s.x + tip, y0 = H - 1 - s.h, slope = 2 * w + (w >= 0 ? s.droop : -s.droop);       // the ear hangs over, downwind
+      for (k = 0; k < s.ear; k++) {
+        var ex = x0 + slope * k * (1 + k * 0.05), ey = y0 - k + Math.abs(slope) * k * k * 0.035, side = k % 2 ? 1 : -1;
+        px(ex, ey, L.ear);
+        if (k > 0 && k < s.ear - 1) { px(ex + side, ey, L.edge); if (k > 1 && k < s.ear - 2) px(ex - side, ey, L.ear); }
+        if (k % 2 && k < s.ear - 1) { var sd = (k >> 1) % 2 ? 1 : -1; for (var j = 1; j < 4; j++) px(ex + sd * (1 + j) + slope * j, ey - j, L.awn); }
+      }
+    }
+    for (var b = 0; b < blades.length; b++) {
+      var bl = blades[b];
+      if (bl.x > W + 10) continue;
+      var bw = wind(bl.x, t - bl.lag) * bl.stiff * GRASS.sway * 1.6 * bl.h;
+      for (var q = 0; q < bl.h; q++) { var ff = q / bl.h; px(bl.x + bw * ff * ff, H - 1 - q, GRASS.stem); }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  function size() {
+    W = Math.min(MAXW, Math.ceil(c.clientWidth / S));
+    c.width = W; c.height = H;
+    img = ctx.createImageData(W, H); d = img.data;
+  }
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches, last = -1e9;
+  function frame(ts) {
+    if (Math.min(MAXW, Math.ceil(c.clientWidth / S)) !== W) size();
+    if (W > 0 && ts - last > 80) { last = ts; draw(ts / 1000); }                                           // about 12 frames a second
+    requestAnimationFrame(frame);
+  }
+  size();
+  window.addEventListener("resize", function () { size(); draw(performance.now() / 1000); });
+  if (still) { if (W > 0) draw(0); } else requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
