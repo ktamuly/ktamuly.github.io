@@ -6,7 +6,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#120d0a">
-<title>Latte Art Pour</title>
+<title>latte</title>
+<meta name="description" content="Try coffee art in your browser.">
+<link rel="canonical" href="https://ktamuly.github.io/latte/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ktamuly.github.io/latte/">
+<meta property="og:title" content="Try coffee art in your browser">
+<meta property="og:image" content="https://ktamuly.github.io/latte/card.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A cup of coffee seen from above, with a heart in milk foam">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="180x180" href="icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b120d'/%3E%3Crect x='40' y='26.5' width='19' height='11' rx='5.5' fill='%23efe6d6'/%3E%3Ccircle cx='29' cy='32' r='22' fill='%23efe6d6'/%3E%3Ccircle cx='29' cy='32' r='16.5' fill='%236b3a1c'/%3E%3Cpath d='M29 42.5c-6.400-4.200-10.200-8-10.200-12.600 0-3.400 2.500-5.600 5.300-5.600 2.200 0 3.900 1.300 4.900 3.300 1-2 2.700-3.300 4.900-3.300 2.800 0 5.300 2.200 5.300 5.600 0 4.600-3.800 8.400-10.200 12.600z' fill='%23fbf5ea'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +32,6 @@ html,body{margin:0;height:100%;background:#120d0a;overflow:hidden;overscroll-beh
   font:500 15px/1.4 Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
 canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
 #c{touch-action:none}
-#guide{pointer-events:none}
 .glass{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line);box-shadow:0 12px 32px rgba(0,0,0,.32)}
 button{font:inherit;font-weight:700;color:var(--ink);background:transparent;border:0;border-radius:999px;min-height:44px;min-width:44px;padding:0 12px;cursor:pointer;touch-action:manipulation;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:background .15s,color .15s,opacity .15s}
 button:hover{background:rgba(255,244,230,.07)}
@@ -54,28 +67,33 @@ svg.i{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .opt .swatch{width:20px;height:20px}
 .opt span{display:block}
 .opt em{display:block;font-style:normal;font-weight:500;font-size:13px;color:var(--mute)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.card{flex-direction:column;border-radius:16px;padding:10px 4px 9px;min-height:0;gap:6px;background:rgba(255,244,230,.05)}
-.card svg{width:52px;height:52px}
-.card span{font-size:13.5px}
-.card em{font-style:normal;font-weight:500;font-size:11.5px;color:var(--mute);margin-top:-4px}
-.coach{position:fixed;left:50%;transform:translateX(-50%);top:calc(66px + env(safe-area-inset-top));width:min(400px,calc(100% - 20px));border-radius:20px;padding:12px 14px 12px}
-.coach-top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute);font-weight:700}
-.coach-text{font-size:16px;font-weight:700;margin:4px 0 10px;min-height:22px;text-wrap:balance}
-.prog{height:3px;border-radius:3px;background:rgba(255,244,230,.12);overflow:hidden}
-.prog i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px}
-.coach-actions{display:flex;gap:6px;margin-top:10px;justify-content:flex-end}
-.coach-actions:empty{display:none}
-.coach-actions button{background:rgba(255,244,230,.08);font-size:14px;min-height:38px;padding:0 14px}
-.coach-actions button.primary{background:var(--accent);color:var(--accent-ink)}
-.jug{position:fixed;left:0;top:0;width:140px;height:180px;pointer-events:none;transform-origin:70px 14px;transition:opacity .3s,filter .3s;will-change:transform;filter:drop-shadow(4px 10px 8px rgba(0,0,0,.45))}
-.jug.high{filter:drop-shadow(14px 30px 16px rgba(0,0,0,.32))}
-.jug.ghost{opacity:.42;filter:none}
 .overlay{position:fixed;inset:0;background:rgba(10,6,4,.84);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
 .overlay img{max-width:min(90vw,520px);max-height:68vh;border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,.5);-webkit-touch-callout:default;user-select:auto;-webkit-user-select:auto}
 .overlay p{margin:0;color:var(--mute);font-size:14px}
 .hidden{display:none!important}
 #err{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+/* jug height: mode chip + hold-to-lift button, for the thumb that is not pouring */
+.jugctl{position:fixed;left:calc(12px + env(safe-area-inset-left));bottom:calc(78px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.jugrow{display:flex;align-items:flex-end;gap:8px}
+.sidev{border-radius:18px;pointer-events:none;flex:none}
+#svStream{stroke-dasharray:5 3;animation:flowdash .35s linear infinite}
+@keyframes flowdash{to{stroke-dashoffset:-8}}
+@media (prefers-reduced-motion:reduce){#svStream{animation:none}}
+/* on a phone the side view sits in the label under the cup */
+body[data-jug=label] #jugMode{display:none}
+body[data-jug=label] .holdbtn{width:66px;height:66px}
+body[data-jug=label] .sidev{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;width:69px;height:50px}
+body[data-jug=label] .status{padding:4px 16px 4px 8px;margin-top:20px;gap:8px}
+body[data-jug=label] .status>i{display:none}
+body[data-jug=label] #svCap{display:none}
+.chip{min-height:34px;padding:0 12px;font-size:12.5px;color:var(--mute)}
+.chip.on{color:var(--ink)}
+.holdbtn{width:78px;height:78px;border-radius:50%;flex-direction:column;gap:0;padding:0;touch-action:none;transition:transform .12s,background .12s,color .12s}
+.holdbtn svg{width:18px;height:18px;margin-bottom:-1px}
+.holdbtn span{font-size:15px;font-weight:800;line-height:1.1}
+.holdbtn small{font-size:11px;font-weight:600;color:var(--mute)}
+.holdbtn.on,.holdbtn.on:hover{background:var(--accent);color:var(--accent-ink);transform:scale(1.06)}
+.holdbtn.on small{color:rgba(36,23,14,.7)}
 /* fill ring around the cup + what the jug is doing */
 .ring{position:fixed;left:0;top:0;pointer-events:none;overflow:visible}
 .ring circle{fill:none;stroke-linecap:round}
@@ -135,54 +153,25 @@ svg.i{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .spark.go svg{animation:pop 1.3s ease-out forwards}
 @keyframes pop{0%{opacity:0;transform:translate(0,0) scale(.2) rotate(0)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1) rotate(90deg)}}
 @media (prefers-reduced-motion:reduce){.steam,.spark{display:none}}
-@media (max-width:420px){.seg button{padding:0 11px}button{padding:0 9px}.card svg{width:44px;height:44px}}
-@media (min-width:900px) and (min-aspect-ratio:5/4){.coach{left:calc(20px + env(safe-area-inset-left));transform:none;top:auto;bottom:calc(20px + env(safe-area-inset-bottom));width:340px}}
+@media (max-width:420px){.seg button{padding:0 11px}button{padding:0 9px}}
 @media (prefers-reduced-motion:reduce){.sheet{animation:none}.hint{transition:none}}
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
-<canvas id="guide"></canvas>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <linearGradient id="steel" x1="0" x2="1" y1="0" y2="0.3"><stop offset="0" stop-color="#f6f8f9"/><stop offset=".45" stop-color="#c4cacf"/><stop offset="1" stop-color="#737c83"/></linearGradient>
-    <linearGradient id="steelDark" x1="0" x2="1"><stop offset="0" stop-color="#9aa3a9"/><stop offset="1" stop-color="#5d666c"/></linearGradient>
     <linearGradient id="cShade" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></linearGradient>
-    <radialGradient id="skin" cx=".38" cy=".3" r=".85"><stop offset="0" stop-color="#e6bb96"/><stop offset=".7" stop-color="#bf8a63"/><stop offset="1" stop-color="#9b6845"/></radialGradient>
   </defs>
 </svg>
-
-<div class="jug hidden" id="jug" aria-hidden="true">
-  <svg viewBox="-70 -14 140 180" width="140" height="180">
-    <rect x="-8" y="86" width="16" height="46" rx="8" fill="url(#steelDark)"/>
-    <path d="M0 0 L15 21 C36 27 45 45 45 63 C45 89 25 105 0 105 C-25 105 -45 89 -45 63 C-45 45 -36 27 -15 21 Z" fill="url(#steel)"/>
-    <path d="M0 0 L15 21 C36 27 45 45 45 63 C45 89 25 105 0 105 C-25 105 -45 89 -45 63 C-45 45 -36 27 -15 21 Z" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>
-    <ellipse cx="0" cy="61" rx="35" ry="37" fill="#5f686e" opacity=".55"/>
-    <ellipse id="jugMilk" cx="0" cy="60" rx="33" ry="35" fill="#f7f1e6"/>
-    <path id="jugSpout" d="M0 5 L9 21 L-9 21 Z" fill="#f7f1e6"/>
-    <ellipse cx="-12" cy="48" rx="12" ry="7" fill="#fff" opacity=".35"/>
-    <path d="M-24 132 C-30 114 -16 101 0 101 C16 101 30 114 24 133 C20 152 -20 153 -24 132 Z" fill="url(#skin)"/>
-    <path d="M18 112 C30 104 40 108 40 116 C40 123 31 125 22 124" fill="url(#skin)"/>
-    <path d="M-14 120 C-6 124 6 124 14 120" stroke="rgba(90,50,25,.35)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-    <path d="M-15 129 C-6 133 6 133 15 129" stroke="rgba(90,50,25,.3)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-  </svg>
-</div>
 
 <div class="top">
   <div class="mark">latte<small id="milkLabel">Whole milk</small></div>
   <div class="pill glass">
     <button id="newCup" aria-label="New cup" title="New cup"><svg class="i" viewBox="0 0 24 24"><path d="M4 9h13v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 10.5h1.2a2.5 2.5 0 0 1 0 5H16.6"/><path d="M8 3.5c0 1.5 1.5 1.5 1.5 3M12 3.5c0 1.5 1.5 1.5 1.5 3"/></svg></button>
-    <button id="learnBtn" aria-label="Learn a pattern"><svg class="i" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/><path d="M22 9v6"/></svg>Learn</button>
     <button id="save" aria-label="Save picture" title="Save picture"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg></button>
   </div>
-</div>
-
-<div class="coach glass hidden" id="coach">
-  <div class="coach-top"><span id="coachName">Heart</span><span id="coachStep"></span></div>
-  <div class="coach-text" id="coachText"></div>
-  <div class="prog"><i id="coachProg"></i></div>
-  <div class="coach-actions" id="coachActions"></div>
 </div>
 
 <svg class="steam" id="steam" viewBox="0 0 120 120" aria-hidden="true"><path d="M30 110c-10-18 12-26 2-46s8-30 4-44"/><path d="M62 112c-12-20 14-28 2-50s10-30 4-46"/><path d="M92 110c-9-16 11-24 2-42s7-26 3-40"/></svg>
@@ -190,6 +179,31 @@ svg.i{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 <div class="shelf hidden" id="shelf"></div>
 <svg class="ring" id="ring" aria-hidden="true"><circle class="trk" id="ringTrk"/><circle class="val" id="ringVal"/><circle class="mid" id="ringMid" r="3"/></svg>
 <div class="status glass" id="status" style="opacity:0"><i></i><span id="statusText"></span></div>
+
+<div class="jugctl" id="jugCtl">
+  <button class="chip glass" id="jugMode" aria-label="Switch the jug between automatic and manual height">Jug · Auto</button>
+  <div class="jugrow">
+    <button class="holdbtn glass" id="holdBtn" aria-label="Hold to lift the jug for a high pour"><svg class="i" viewBox="0 0 24 24"><path d="M12 19V6"/><path d="M6.5 11.5L12 6l5.5 5.5"/></svg><span>High</span><small>hold</small></button>
+    <svg class="sidev glass" id="sideView" viewBox="0 0 124 96" width="124" height="96" role="img" aria-label="Side view of the jug and cup">
+      <defs><clipPath id="svClip"><path d="M44 50 L49 75 Q50 81 56 81 H104 Q110 81 111 75 L116 50 Z"/></clipPath></defs>
+      <g clip-path="url(#svClip)">
+        <rect id="svLiq" x="40" y="70" width="80" height="14" fill="#6b3a1c"/>
+        <g id="svPlume" opacity="0"><line x1="66" x2="66" y1="0" y2="11" stroke="#f6eee1" stroke-width="1.6" opacity=".75"/><ellipse cx="66" cy="12" rx="10" ry="4.5" fill="#d7b086" opacity=".8"/></g>
+        <rect id="svFoam" x="40" y="70" width="80" height="3" fill="#f6eee1" opacity="0"/>
+        <ellipse id="svFloat" cx="66" cy="70" rx="14" ry="2.8" fill="#fffaf2" opacity="0"/>
+      </g>
+      <line id="svStream" x1="66" x2="66" y1="40" y2="70" stroke="#f6eee1" stroke-width="1.6" stroke-linecap="round" opacity="0"/>
+      <path d="M44 50 L49 75 Q50 81 56 81 H104 Q110 81 111 75 L116 50" fill="none" stroke="rgba(255,244,230,.7)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <g id="svJug" transform="translate(66 40)"><g transform="rotate(65)">
+        <path d="M-26 7 Q-35 7 -35 13 Q-35 19 -26 19" fill="none" stroke="#8d959b" stroke-width="2.6"/>
+        <rect x="-26" y="1" width="22" height="26" rx="3" fill="#c4cacf"/>
+        <path d="M-6 1 L0 0 L-4 7 Z" fill="#c4cacf"/>
+        <rect x="-24" y="3" width="6" height="22" rx="2" fill="#fff" opacity=".28"/>
+      </g></g>
+      <text id="svCap" x="62" y="92.5" text-anchor="middle" font-size="12" font-weight="700" fill="#f2eadf" font-family="Manrope,system-ui,sans-serif">High · milk sinks</text>
+    </svg>
+  </div>
+</div>
 
 <div class="hint" id="hint"><b>Press and hold</b> in the cup to pour</div>
 
@@ -213,11 +227,8 @@ svg.i{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stro
   <h3>Glaze</h3>
   <div class="cupgrid" id="cups"></div>
   <p class="note" id="cupNote"></p>
-</div>
-
-<div class="sheet glass hidden" id="learnSheet">
-  <h2>Learn a pattern</h2>
-  <div class="grid" id="styleGrid"></div>
+  <h3>Jug height</h3>
+  <div class="seg" role="group" aria-label="Jug height control" id="jugSeg" style="display:inline-flex"><button data-m="auto">Auto</button><button data-m="manual">Manual</button></div>
 </div>
 
 <div class="overlay hidden" id="shot">
@@ -242,11 +253,12 @@ gl.getExtension('OES_texture_float_linear');
 
 const CUP_R = 0.48;      // liquid radius in sim uv units
 const SIM = 192;         // velocity / pressure grid
-const DYE = 1024;        // dye texture: x foam, y crema mottling, z pass id, w milk mixed in below
+const DYE = 1024;        // dye texture: x foam, y crema mottling, z sheet mark, w milk mixed in below
 const PRESSURE_ITERS = 30;
 const JET = 0.35;        // forward push of a low pour, uv/s
 const START_FILL = 0.3;  // the espresso alone
-const FILL_RATE = 0.095; // cup fraction per second at medium flow
+const FILL_Q = 0.042;    // milk volume per second at medium flow; the level rises slower as the cup widens toward the rim
+const TUNE = {cutK:0.27, cutR:0.034, cutS:0.5, punch:0.2, punchW:0.012, highSrc:0};   // the finishing cut: how hard a high stream drags foam, and how fine a line it scores
 const DROP_AT = 0.5;     // the jug comes down once the cup is half full
 
 // ---------- milks ----------
@@ -301,7 +313,7 @@ void main(){
   vec2 v = mix(texture(uTarget,vUv).xy, uForce, g);
   fragColor = vec4(v*cupMask(vUv),0.,1.);
 }`,
-splatMilk: H+`uniform sampler2D uTarget; uniform vec2 uA; uniform vec2 uB; uniform float uRadius; uniform float uAmount; uniform float uPass; uniform float uMode;
+splatMilk: H+`uniform sampler2D uTarget; uniform vec2 uA; uniform vec2 uB; uniform float uRadius; uniform float uAmount; uniform float uPass; uniform float uMode; uniform vec2 uPunch;
 void main(){
   vec2 pa=vUv-uA, ba=uB-uA; float h=clamp(dot(pa,ba)/max(dot(ba,ba),1e-9),0.,1.); vec2 d=pa-ba*h;
   float g = exp(-dot(d,d)/(uRadius*uRadius));
@@ -312,18 +324,18 @@ void main(){
     float old = c.x;
     c.x = mix(c.x, 1., f);
     float share = max(f*(1.-old)/max(c.x,1e-3), f*f);
-    // pass id: foam laid in different swings stays a separate sheet; where sheets meet a fine coffee line shows
+    // sheet mark, 0 or 1: foam laid in different swings stays a separate sheet; where two sheets meet a fine coffee line shows
     // each swing stamps its own id crisply under the stream, so the boundary between swings stays sharp
     if (g > 0.35) c.z = uPass; else c.z = mix(c.z, uPass, share*step(old, 0.3));
   } else {
     // high pour: the stream dives, milk mixes in below and lightens the coffee; it punches through foam where it lands
     c.w = mix(c.w, 1., f*0.5);
-    float core = exp(-dot(d,d)/(uRadius*uRadius*0.05));
-    c.x *= exp(-uAmount*2.5*core);
+    float core = exp(-dot(d,d)/(uRadius*uRadius*uPunch.y));
+    c.x *= exp(-uAmount*uPunch.x*core);
   }
   fragColor = c;
 }`,
-advect: H+`uniform sampler2D uVelocity; uniform sampler2D uSource; uniform float uDt; uniform float uDissipation; uniform float uIsVel; uniform float uSharpen; uniform float uFade;
+advect: H+`uniform sampler2D uVelocity; uniform sampler2D uSource; uniform float uDt; uniform float uDissipation; uniform float uIsVel; uniform float uSharpen; uniform float uFade; uniform float uGrid;
 void main(){
   vec2 coord = vUv - uDt*texture(uVelocity,vUv).xy;
   vec4 r = texture(uSource,coord) / (1.+uDissipation*uDt);
@@ -333,6 +345,13 @@ void main(){
     m += uDt*uSharpen*m*(1.-m)*(m-0.35);
     m -= uDt*uFade*m;
     r.x = clamp(m,0.,1.);
+    // the sheet mark travels with the foam only, so the coffee beside a sheet cannot dilute it and draw rings along its edge
+    vec2 st = coord*uGrid - 0.5, i0 = floor(st), fr = st - i0;
+    vec4 qa = texture(uSource, (i0 + vec2(0.5, 0.5))/uGrid), qb = texture(uSource, (i0 + vec2(1.5, 0.5))/uGrid), qc = texture(uSource, (i0 + vec2(0.5, 1.5))/uGrid), qd = texture(uSource, (i0 + vec2(1.5, 1.5))/uGrid);
+    vec4 wt = vec4((1.-fr.x)*(1.-fr.y), fr.x*(1.-fr.y), (1.-fr.x)*fr.y, fr.x*fr.y)*vec4(qa.x, qb.x, qc.x, qd.x);
+    float ws = wt.x + wt.y + wt.z + wt.w;
+    if (ws > 1e-3) r.z = dot(wt, vec4(qa.z, qb.z, qc.z, qd.z))/ws;
+    r.z = clamp(r.z - uDt*12.*sin(6.2831853*r.z)/6.2831853, 0., 1.);   // and snaps back to 0 or 1, so the fine lines between leaves stay crisp when dragged
     r.w = clamp(r.w + uDt*uFade*0.3*m, 0., 1.);
   }
   fragColor = r;
@@ -614,6 +633,7 @@ function copyTo(src, dst){ const u = P.copy.use(); gl.uniform1i(u.uTex, src.atta
 function zero(dbl){ const u = P.scale.use(); gl.uniform1i(u.uTex, dbl.read.attach(0)); gl.uniform1f(u.uValue, 0); blit(dbl.write); dbl.swap(); }
 
 function newCup(){
+  hasFoam = false;
   fill = START_FILL; height = 1; surfR = 0.55 + 0.45*Math.pow(fill, 0.8);
   const u = P.initDye.use(); gl.uniform1f(u.uSeed, Math.random()*100); blit(dye.write); dye.swap();
   zero(vel); zero(pressure);
@@ -634,7 +654,6 @@ function undo(){
 function updateUndo(){ $('#undo').disabled = undoStack.length === 0; }
 
 // ---------- layout ----------
-const guide = $('#guide'), g2 = guide.getContext('2d');
 let W=1, Hh=1, dpr=1, center=[0,0], liqR=100, simScale=200, scene=null, cssLiqR=100;
 const SHAPES = [
   {name:'Classic', rimW:.12, handle:1, saucer:1, sScal:0,  rScal:0,  ears:0},
@@ -661,8 +680,8 @@ let cup = CUPS[1], cupColor = cup.inn;
 function layout(){
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   const cw = window.innerWidth, ch = window.innerHeight;
-  W = canvas.width = guide.width = Math.max(1, Math.round(cw*dpr));
-  Hh = canvas.height = guide.height = Math.max(1, Math.round(ch*dpr));
+  W = canvas.width = Math.max(1, Math.round(cw*dpr));
+  Hh = canvas.height = Math.max(1, Math.round(ch*dpr));
   const topH = 56, barH = 80, availH = Math.max(200, ch - barH - topH);
   cssLiqR = Math.min(cw*0.36, availH*0.33);
   liqR = cssLiqR*dpr; simScale = liqR/CUP_R;
@@ -714,7 +733,6 @@ function renderScene(){
   blit(scene);
 }
 function toUv(cx, cy){ const k = simScale*surfR; return [0.5 + (cx*dpr - center[0])/k, 0.5 + ((Hh - cy*dpr) - center[1])/k]; }
-function uvToClient(u, v){ const k = simScale*surfR; return [(center[0] + u*k)/dpr, (Hh - (center[1] + v*k))/dpr]; } // u,v offsets from cup centre
 function clampUv(p){
   const dx = p[0]-0.5, dy = p[1]-0.5, d = Math.hypot(dx,dy), m = CUP_R*0.96;
   return d > m ? [0.5+dx*m/d, 0.5+dy*m/d] : p;
@@ -722,31 +740,32 @@ function clampUv(p){
 
 // ---------- state ----------
 let mode = 'pour';
-let surfR = 0.72, height = 1, holdHigh = false, fill = START_FILL, ringLen = 1, statusTimer = 0, lessonH = null;   // height 0 = spout on the surface, 1 = full lift
+let manual = false;   // manual jug: low unless High is held
+let hasFoam = false; // this cup has white on it (for the side view)
+let surfR = 0.72, height = 1, holdHigh = false, fill = START_FILL, ringLen = 1, statusTimer = 0;   // height 0 = spout on the surface, 1 = full lift
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x-a)/(b-a))); return t*t*(3-2*t); };
 const flows = [{n:'Thin', v:0.55}, {n:'Medium', v:1.0}, {n:'Thick', v:1.5}];
 let flowIdx = 1;
 const ptr = {active:false, id:-1, cx:0, cy:0, last:null, t:0, pressure:0.5, type:'', vel:[0,0], drift:[0,0], dir:null};
 let source = [0.5,0.5,0], stream = [0,0,0,0], passId = 0;
-let lesson = null;
 
 function beginStroke(x, y, id, type, pressure){
-  Object.assign(ptr, {active:true, id, cx:x, cy:y, last:null, t:0, pressure:pressure||0.5, type, vel:[0,0], drift:[0,0], dir:null});
-  passId = (passId+3) % 1000;
+  Object.assign(ptr, {active:true, id, cx:x, cy:y, last:null, t:0, pressure:pressure||0.5, type, vel:[0,0], drift:[0,0], dir:null, cut:false});
+  passId = (passId+3) % 64;
+  // automatic jug: a new pour comes in from above, then settles low
+  if (!manual && fill > DROP_AT) height = Math.max(height, 0.8);
   pushUndo();
 }
 
 // ---------- input ----------
 canvas.addEventListener('pointerdown', e => {
   if (ptr.active) return;
-  if (lesson && lesson.kind === 'watch') return;
   const uv = toUv(e.clientX, e.clientY);
   if (Math.hypot(uv[0]-0.5, uv[1]-0.5) > CUP_R*1.2) return;
   e.preventDefault();
   try { canvas.setPointerCapture(e.pointerId); } catch(_) {}
   beginStroke(e.clientX, e.clientY, e.pointerId, e.pointerType, e.pressure);
   $('#hint').style.opacity = 0;
-  if (lesson && lesson.kind === 'try' && !lesson.started) { lesson.started = true; lesson.t = 0; lesson.lastStep = -1; }
 });
 canvas.addEventListener('pointermove', e => {
   if (!ptr.active || e.pointerId !== ptr.id) return;
@@ -766,11 +785,11 @@ function splatVel(a, b, f, r, s){
   gl.uniform2f(u.uForce, f[0], f[1]); gl.uniform1f(u.uRadius, r); gl.uniform1f(u.uStrength, s);
   blit(vel.write); vel.swap();
 }
-function splatMilk(a, b, r, amt, modeId){
+function splatMilk(a, b, r, amt, modeId, punch = 2.5, punchW = 0.05){
   const u = P.splatMilk.use();
   gl.uniform1i(u.uTarget, dye.read.attach(0));
   gl.uniform2f(u.uA, a[0], a[1]); gl.uniform2f(u.uB, b[0], b[1]);
-  gl.uniform1f(u.uRadius, r); gl.uniform1f(u.uAmount, amt); gl.uniform1f(u.uPass, passId); gl.uniform1f(u.uMode, modeId);
+  gl.uniform1f(u.uRadius, r); gl.uniform1f(u.uAmount, amt); gl.uniform1f(u.uPass, passId % 2); gl.uniform1f(u.uMode, modeId); gl.uniform2f(u.uPunch, punch, punchW);
   blit(dye.write); dye.swap();
 }
 
@@ -794,18 +813,23 @@ function handleInput(dt){
   }
   const ramp = Math.min(1, ptr.t/0.25);
   const press = ptr.type === 'pen' ? 0.3 + 1.4*ptr.pressure : 1;
-  const flow = flows[flowIdx].v*ramp*press*(fill >= 1 ? 0 : 1);
-  const wasFull = fill >= 1;
-  fill = Math.min(1, fill + FILL_RATE*flow*dt);
-  if (!wasFull && fill >= 1) served();
+  // automatic jug: a quick, straight push away from you is the finishing cut; the jug lifts and stays up until you let go
+  if (!manual && !ptr.cut && fill > DROP_AT && ptr.drift[1] > 0.45 && ptr.drift[1] > 1.3*Math.abs(ptr.drift[0])) ptr.cut = true;
   const h = height;
   const gate = smooth(0.36, 0.48, fill);  // below this the surface is too deep: milk sinks whatever the jug height
   const fw = (1 - smooth(0.25, 0.65, h))*gate;          // how much foam surfaces (low)
   const mw = Math.max(smooth(0.45, 0.85, h), 1 - gate); // how much the stream dives and mixes (high)
+  const cutting = mw*gate;                               // a high pour over a cup that is full enough to hold art
+  const flow = flows[flowIdx].v*ramp*press*(fill >= 1 ? 0 : 1);
+  const wasFull = fill >= 1;
+  fill = Math.min(1, fill + FILL_Q*flow*(1 - 0.5*cutting*smooth(DROP_AT, DROP_AT + 0.1, fill))*dt/(surfR*surfR));   // the finishing stream is thin
+  if (!wasFull && fill >= 1) served();
+  const moving = Math.min(1, dspeed/0.4);
   let src = 0;
   if (mw > 0.01){
-    splatMilk(prev, cur, 0.085, 14*dt*flow*mw, 1);
-    src += 6*flow*mw;
+    // a still, high stream breaks the foam where it lands; a moving one only scores a fine line
+    splatMilk(prev, cur, 0.085, 14*dt*flow*mw, 1, 2.5 + (TUNE.punch - 2.5)*moving, 0.05 + (TUNE.punchW - 0.05)*moving);
+    src += flow*mw*(6*(1 - gate) + TUNE.highSrc*gate);
   }
   const thin = 1/(1 + speed*1.6);
   const rad = (0.014 + 0.012*Math.min(flow,1.7))*(0.55 + 0.45*thin)*(1 - 0.4*smooth(0.15, 0.6, h));
@@ -814,15 +838,18 @@ function handleInput(dt){
     if (speed > 0.15){
       const ux = ptr.vel[0]/speed, uy = ptr.vel[1]/speed;
       if (!ptr.dir) ptr.dir = [ux,uy];
-      else if (ux*ptr.dir[0] + uy*ptr.dir[1] < -0.2){ passId = (passId+1) % 1000; ptr.dir = [ux,uy]; }
+      else if (ux*ptr.dir[0] + uy*ptr.dir[1] < -0.2){ passId = (passId+1) % 64; ptr.dir = [ux,uy]; }
     }
     splatMilk(prev, cur, rad, 70*dt*flow*cover*fw, 0);
     // tilted jug carries foam forward (up the screen), strongest when moving
     splatVel(cur, cur, [0, JET*flow*fw*(0.5 + 0.5*thin)*(0.3 + 0.7*Math.min(1, speed/0.35))], rad*1.7, 0.45);
     src += 22*flow*fw*milk.spread*(0.35 + 0.65*thin);
   }
-  // a moving stream drags the surface, at any height short of a full lift
-  splatVel(prev, cur, [ptr.drift[0]*0.4, ptr.drift[1]*0.4], rad*2.0, 0.5*Math.min(1, dspeed*2.5)*(1 - 0.6*mw));
+  // a moving stream drags the surface with it. Low: gently, under the spout. High: the sunken stream pulls a narrow
+  // channel of foam along, which is what draws the leaves into a stem and a heart into its point
+  const lowDrag = 0.5*Math.min(1, dspeed*2.5)*(1 - mw);
+  if (lowDrag > 0.005) splatVel(prev, cur, [ptr.drift[0]*0.4, ptr.drift[1]*0.4], rad*2.0, lowDrag);
+  if (cutting > 0.01) splatVel(prev, cur, [ptr.drift[0]*TUNE.cutK, ptr.drift[1]*TUNE.cutK], TUNE.cutR, TUNE.cutS*moving*cutting);
   source = [cur[0], cur[1], src];
   stream = mw > 0.5 ? [gx, gy, 2.6*dpr, 2] : [gx, gy, Math.max(3*dpr, rad*simScale*surfR*0.6), 1];
 }
@@ -855,7 +882,7 @@ function stepSim(dt){
   blit(vel.write); vel.swap();
 
   gl.uniform1i(u.uVelocity, vel.read.attach(0)); gl.uniform1i(u.uSource, dye.read.attach(1));
-  gl.uniform1f(u.uDissipation, 0); gl.uniform1f(u.uIsVel, 0); gl.uniform1f(u.uSharpen, milk.sharpen); gl.uniform1f(u.uFade, milk.fade);
+  gl.uniform1f(u.uDissipation, 0); gl.uniform1f(u.uIsVel, 0); gl.uniform1f(u.uSharpen, milk.sharpen); gl.uniform1f(u.uFade, milk.fade); gl.uniform1f(u.uGrid, DYE);
   blit(dye.write); dye.swap();
 }
 
@@ -869,151 +896,11 @@ function render(){
   blit(null);
 }
 
-// ---------- lessons ----------
-// u,v: offset from cup centre in sim units (cup radius 0.48); v up = away from you. h: pour height. down: pouring or lifted.
-const sway = (s, f, a) => a*Math.sin(2*Math.PI*f*s);
-const STYLES = {
-  dot: {name:'Dot', level:'Beginner', steps:[
-    {d:2.0, h:1, down:1, p:s=>[0,0], t:'Pour in the centre. The jug starts high to fill the cup'},
-    {d:2.8, h:0,  down:1, p:s=>[0,0.03*s], t:'Half full: the jug drops low. Hold still, the dot grows'},
-    {d:0.8, h:0.6,  down:0, p:s=>[0,0.03], t:'Lift away cleanly'}]},
-  heart: {name:'Heart', level:'Beginner', steps:[
-    {d:2.0, h:1, down:1, p:s=>[0,0], t:'Pour in the centre. The jug starts high to fill the cup'},
-    {d:2.6, h:0,  down:1, p:s=>[0,-0.04], t:'Half full: the jug drops low. Hold still, let it grow'},
-    {d:0.4, h:0.35, down:0, p:s=>[0,-0.04-0.20*s], t:'Let go and move to the near edge'},
-    {d:0.45,h:0.35, down:1, p:s=>[0,-0.24+0.56*s], t:'Press and swipe quickly through to the far side'},
-    {d:0.8, h:0.6,  down:0, p:s=>[0,0.32], t:'Lift away'}]},
-  tulip: {name:'Tulip', level:'Intermediate', steps:[
-    {d:1.8, h:1, down:1, p:s=>[0,0], t:'Pour in the centre. The jug starts high to fill the cup'},
-    {d:1.1, h:0,  down:1, p:s=>[0,0.14], t:'Near the far side: first blob'},
-    {d:0.35,h:0.6,  down:0, p:s=>[0,0.14-0.12*s], t:'Stop and lift'},
-    {d:1.0, h:0,  down:1, p:s=>[0,0.02+0.04*s], t:'Second blob, nudging it into the first'},
-    {d:0.35,h:0.6,  down:0, p:s=>[0,0.06-0.16*s], t:'Stop and lift'},
-    {d:1.0, h:0,  down:1, p:s=>[0,-0.10+0.03*s], t:'Third blob, nudging forward again'},
-    {d:0.35,h:0.6,  down:0, p:s=>[0,-0.07-0.19*s], t:'Let go and move to the near edge'},
-    {d:0.45,h:0.35, down:1, p:s=>[0,-0.26+0.58*s], t:'Press and swipe quickly through all three'},
-    {d:0.8, h:0.6,  down:0, p:s=>[0,0.32], t:'Lift away'}]},
-  rosetta: {name:'Rosetta', level:'Advanced', steps:[
-    {d:1.8, h:1, down:1, p:s=>[0,0.08], t:'Pour in the centre. The jug starts high to fill the cup'},
-    {d:0.5, h:0, down:1, p:s=>[0,0.08], t:'Keep pouring until white appears'},
-    {d:3.0, h:0, down:1, p:s=>[sway(s,7.5,0.07), 0.08-0.32*s], t:'Wiggle side to side while slowly drawing back'},
-    {d:0.35,h:0.6, down:0, p:s=>[0,-0.26], t:'Let go and move to the near edge'},
-    {d:0.45,h:0.35, down:1, p:s=>[0,-0.26+0.60*s], t:'Press and swipe quickly through the middle'},
-    {d:0.8, h:0.6, down:0, p:s=>[0,0.34], t:'Lift away'}]}
-};
-for (const k in STYLES) STYLES[k].total = STYLES[k].steps.reduce((a,s)=>a+s.d, 0);
-
-const ICONS = {
-  dot: '<circle cx="24" cy="24" r="10" fill="#f6eee1"/>',
-  heart: '<path d="M24 35 C17 30 12 25 12 19.5 C12 15.5 15 13 18.5 13 C21 13 23 14.6 24 17 C25 14.6 27 13 29.5 13 C33 13 36 15.5 36 19.5 C36 25 31 30 24 35Z" fill="#f6eee1"/>',
-  tulip: '<path d="M15 16 Q24 9 33 16 Q24 13 15 16Z M14 23 Q24 15 34 23 Q24 19.5 14 23Z M14 31 Q24 22 34 31 Q24 37 14 31Z" fill="#f6eee1"/><path d="M24 11v26" stroke="#f6eee1" stroke-width="1.4"/>',
-  rosetta: '<g fill="none" stroke="#f6eee1" stroke-width="2.4" stroke-linecap="round"><path d="M16 14 Q24 18 32 14"/><path d="M14 19 Q24 24 34 19"/><path d="M13 24.5 Q24 30 35 24.5"/><path d="M14 30 Q24 35.5 34 30"/><path d="M24 11v27" stroke-width="1.4"/></g><path d="M20 12 Q24 9 28 12 Q24 13.5 20 12Z" fill="#f6eee1"/>'
-};
-
-function lessonAt(st, t){
-  let acc = 0;
-  for (let i=0;i<st.steps.length;i++){ const s = st.steps[i]; if (t < acc+s.d) return {i, s, k:(t-acc)/s.d, end:false}; acc += s.d; }
-  const i = st.steps.length-1; return {i, s:st.steps[i], k:1, end:true};
-}
-
-const jug = $('#jug');
-function placeJug(u, v, ghost, high, visible){
-  if (!visible){ jug.classList.add('hidden'); return; }
-  const [x,y] = uvToClient(u, v);
-  const s = cssLiqR/175*(1 + 0.2*high);
-  jug.style.transform = `translate(${x-70}px,${y-14}px) scale(${s})`;
-  jug.classList.toggle('ghost', ghost); jug.classList.toggle('high', high > 0.5 && !ghost);
-  jug.classList.remove('hidden');
-}
-
-function drawGuide(st, t){
-  g2.clearRect(0,0,guide.width,guide.height);
-  if (!lesson || lesson.kind !== 'try') return;
-  g2.save(); g2.scale(dpr,dpr);
-  g2.setLineDash([5,7]); g2.lineWidth = 2; g2.lineCap = 'round';
-  let acc = 0;
-  for (const s of st.steps){
-    if (s.down && acc + s.d > t && acc < t + 3){
-      const k0 = Math.max(0, (t-acc)/s.d);
-      g2.strokeStyle = 'rgba(255,248,238,.55)';
-      g2.beginPath();
-      for (let j=0;j<=40;j++){ const kk = k0 + (1-k0)*j/40; const [u,v] = s.p(kk); const [x,y] = uvToClient(u,v); j ? g2.lineTo(x,y) : g2.moveTo(x,y); }
-      g2.stroke();
-    }
-    acc += s.d;
-  }
-  g2.restore();
-}
-
-function setCoach(name, step, text, prog, actions){
-  $('#coach').classList.remove('hidden');
-  $('#coachName').textContent = name; $('#coachStep').textContent = step;
-  $('#coachText').textContent = text; $('#coachProg').style.width = (prog*100).toFixed(1)+'%';
-  const box = $('#coachActions'); const key = actions.map(a=>a[0]).join('|');
-  if (box.dataset.key !== key){
-    box.dataset.key = key; box.textContent = '';
-    for (const [label, fn, primary] of actions){ const b = document.createElement('button'); b.textContent = label; if (primary) b.className = 'primary'; b.onclick = fn; box.appendChild(b); }
-  }
-}
-
-function startLesson(key, kind){
-  closeSheets();
-  ptr.active = false;
-  lesson = {key, st:STYLES[key], kind, t:0, started: kind === 'watch', lastStep:-1, done:false};
-  if (mode === 'etch') setMode('pour');
-  newCup();
-  $('#hint').style.opacity = 0;
-}
-function endLesson(){
-  lesson = null; ptr.active = false; lessonH = null;
-  $('#coach').classList.add('hidden'); jug.classList.add('hidden');
-  g2.clearRect(0,0,guide.width,guide.height);
-}
-
-function updateLesson(dt){
-  if (!lesson) return;
-  const L = lesson, st = L.st;
-  if (L.started && !L.done) L.t += dt;
-  const ls = lessonAt(st, L.t);
-  const [u,v] = ls.s.p(ls.k);
-  lessonH = (L.kind === 'watch' && !L.done) ? ls.s.h : null;
-  const n = st.steps.length;
-  if (L.kind === 'watch'){
-    if (!ls.end && ls.s.down){
-      const [x,y] = uvToClient(u,v);
-      if (!ptr.active) beginStroke(x, y, 'demo', 'demo', 0.5);
-      ptr.cx = x; ptr.cy = y;
-    } else if (ptr.active && ptr.id === 'demo') ptr.active = false;
-    placeJug(u, v, false, height, !ls.end);
-    if (ls.end){
-      if (!L.done){ L.done = true; ptr.active = false; }
-      setCoach(st.name, 'Your turn', 'Follow the ghost jug and its dotted path.', 1,
-        [['Try it', () => startLesson(L.key,'try'), true], ['Watch again', () => startLesson(L.key,'watch')], ['Close', endLesson]]);
-    } else {
-      setCoach(st.name, `Step ${ls.i+1} of ${n}`, ls.s.t, L.t/st.total, [['Skip', () => startLesson(L.key,'try')], ['Close', endLesson]]);
-    }
-  } else {
-    if (!L.started){
-      placeJug(...st.steps[0].p(0), true, st.steps[0].h, true);
-      setCoach(st.name, 'Your turn', 'Press and hold under the ghost jug to start.', 0, [['Watch', () => startLesson(L.key,'watch')], ['Close', endLesson]]);
-    } else if (ls.end){
-      if (!L.done){ L.done = true; }
-      jug.classList.add('hidden');
-      setCoach(st.name, 'Done', 'Nice pour. Go again, or watch it once more.', 1,
-        [['Again', () => startLesson(L.key,'try'), true], ['Watch', () => startLesson(L.key,'watch')], ['Close', endLesson]]);
-    } else {
-      placeJug(u, v, true, ls.s.h, true);
-      setCoach(st.name, `Step ${ls.i+1} of ${n}`, (ls.s.down ? '' : '') + ls.s.t, L.t/st.total, [['Restart', () => startLesson(L.key,'try')], ['Close', endLesson]]);
-    }
-  }
-  drawGuide(st, L.t);
-}
-
 // ---------- loop ----------
 let last = performance.now();
 function frame(now){
   const dt = Math.min(Math.max((now-last)/1000, 1/240), 1/30); last = now;
-  updateLesson(dt); updateHeight(dt); handleInput(dt); stepSim(dt); render();
+  updateHeight(dt); handleInput(dt); stepSim(dt); render();
   requestAnimationFrame(frame);
 }
 
@@ -1033,31 +920,65 @@ function served(){
   }
   void sp.offsetWidth; sp.classList.add('go');
 }
-// automatic jug height: high while the cup fills, low once it is half full, lifted for a fast straight swipe
+// jug height. Automatic: high while the cup fills, low once it is half full, lifted for the finishing cut.
+// Manual: low unless High is held. Holding High lifts the jug in either mode.
 function autoHeight(){
   if (holdHigh) return 1;
-  if (lessonH !== null) return lessonH;
-  let h = 1 - smooth(DROP_AT-0.05, DROP_AT+0.08, fill);
-  const ds = Math.hypot(ptr.drift[0], ptr.drift[1]);
-  if (ptr.active && fill > DROP_AT) h = Math.max(h, 0.35*smooth(0.6, 1.2, ds));
-  return h;
+  if (manual) return 0;
+  if (ptr.active && ptr.cut) return 1;
+  return 1 - smooth(DROP_AT-0.05, DROP_AT+0.08, fill);
 }
 function updateHeight(dt){
   surfR = 0.55 + 0.45*Math.pow(fill, 0.8);
   const target = autoHeight();
-  height += (target - height)*(1 - Math.exp(-dt/0.12));   // the jug takes a moment to move
+  height += (target - height)*(1 - Math.exp(-dt/(target > height ? 0.06 : 0.11)));   // the jug takes a moment to move
   $('#ringVal').style.strokeDashoffset = (ringLen*(1-fill)).toFixed(1);
-  $('#steam').classList.toggle('off', ptr.active || !!lesson);
+  $('#steam').classList.toggle('off', ptr.active);
+  $('#holdBtn').classList.toggle('on', holdHigh || (ptr.active && height > 0.6));
+  { // side view: where the jug is, and whether the milk sinks or floats
+    const sy = 79 - 26*fill, ty = sy - 3 - 22*height, pouring = ptr.active && mode === 'pour' && fill < 1;
+    const deep = fill < 0.42, sinks = height > 0.45 || deep;
+    if (pouring && !sinks && ptr.t > 0.3) hasFoam = true;
+    $('#svLiq').setAttribute('y', sy.toFixed(1)); $('#svLiq').setAttribute('height', (84 - sy).toFixed(1));
+    $('#svFoam').setAttribute('y', (sy - 0.5).toFixed(1)); $('#svFoam').setAttribute('opacity', hasFoam ? 0.95 : 0);
+    $('#svJug').setAttribute('transform', `translate(66 ${ty.toFixed(1)})`);
+    const st = $('#svStream'); st.setAttribute('y1', ty.toFixed(1)); st.setAttribute('y2', sy.toFixed(1));
+    st.setAttribute('stroke-width', sinks ? 1.6 : 3.6); st.setAttribute('opacity', pouring ? 1 : 0);
+    $('#svPlume').setAttribute('transform', `translate(0 ${sy.toFixed(1)})`); $('#svPlume').setAttribute('opacity', pouring && sinks ? 1 : 0);
+    $('#svFloat').setAttribute('cy', sy.toFixed(1)); $('#svFloat').setAttribute('opacity', pouring && !sinks ? 1 : 0);
+    const cap = height > 0.45 ? 'High · milk sinks' : deep ? 'Low · still sinks' : 'Low · milk floats';
+    if ($('#svCap').textContent !== cap) $('#svCap').textContent = cap;
+  }
   // status pill: only while pouring
   const st = $('#status');
   if (ptr.active && mode === 'pour'){
     let txt, cls;
     if (fill >= 1){ txt = 'Served · tap New cup for another'; cls = 'low'; }
-    else if (height > 0.6){ txt = 'High · filling the cup'; cls = ''; }
-    else if (height > 0.2){ txt = 'Lifted · cutting through'; cls = ''; }
+    else if (height > 0.45){ txt = fill < DROP_AT + 0.06 ? 'High · filling the cup' : 'High · cutting through'; cls = ''; }
+    else if (fill < 0.42){ txt = 'Low · cup too empty to draw yet'; cls = 'low'; }
     else { txt = 'Low · drawing'; cls = 'low'; }
     $('#statusText').textContent = txt; st.className = 'status glass ' + cls; st.style.opacity = 1; statusTimer = 1.2;
   } else if ((statusTimer -= dt) <= 0) st.style.opacity = 0;
+}
+// on a phone the side view sits in the label under the cup; a tablet or desktop gets the full layout
+function applyJugLayout(){
+  const v = window.innerWidth < 700 ? 'label' : 'full', sv = $('#sideView');
+  document.body.dataset.jug = v;
+  if (v === 'label'){ $('#status').insertBefore(sv, $('#statusText')); sv.setAttribute('viewBox', '12 2 110 80'); }
+  else { $('.jugrow').appendChild(sv); sv.setAttribute('viewBox', '0 0 124 96'); }
+}
+function setManual(m, quiet){
+  manual = m; for (const b of document.querySelectorAll('#jugSeg button')) b.classList.toggle('on', (b.dataset.m === 'manual') === m); $('#jugMode').textContent = m ? 'Jug · Manual' : 'Jug · Auto'; $('#jugMode').classList.toggle('on', m);
+  try { localStorage.setItem('latte-jug', m ? 'manual' : 'auto'); } catch(_) {}
+  if (!quiet) flashNote(m ? 'Manual jug: it pours low. Hold High to lift it' : 'Auto jug: high to fill, low to draw, lifts for the cut');
+}
+{ const hb = $('#holdBtn'); let hid = -1;
+  hb.addEventListener('pointerdown', e => { hid = e.pointerId; try { hb.setPointerCapture(hid); } catch(_) {} holdHigh = true; e.preventDefault(); });
+  const rel = e => { if (e.pointerId === hid){ hid = -1; holdHigh = false; } };
+  hb.addEventListener('pointerup', rel); hb.addEventListener('pointercancel', rel); hb.addEventListener('lostpointercapture', rel);
+  hb.addEventListener('contextmenu', e => e.preventDefault());
+  $('#jugMode').onclick = () => setManual(!manual);
+  for (const b of document.querySelectorAll('#jugSeg button')) b.onclick = () => setManual(b.dataset.m === 'manual');
 }
 const CARTONS = {
   whole:  {roof:'#2b63c9', fin:'#1e4c9f', body:'#ffffff', band:'#2b63c9', label:'WHOLE',
@@ -1090,7 +1011,6 @@ function cartonSVG(k){
 function setMilk(k){
   milkKey = k; milk = MILKS[k];
   $('#milkLabel').textContent = milk.name + ' · ' + cup.name + ' ' + shape.name.toLowerCase();
-  $('#jugMilk').setAttribute('fill', milk.swatch); $('#jugSpout').setAttribute('fill', milk.swatch);
   for (const b of document.querySelectorAll('[data-milk]')) b.classList.toggle('on', b.dataset.milk === k);
 }
 function cupSVG(sh, c, id){
@@ -1158,17 +1078,12 @@ $('#shelf').innerHTML = Object.entries(MILKS).map(([k,m]) => `<button data-milk=
 for (const b of document.querySelectorAll('[data-milk]')) b.onclick = () => { setMilk(b.dataset.milk); flashNote(milk.name + ' milk: ' + milk.note); };
 let noteT = 0;
 function flashNote(t){ const h = $('#hint'); h.textContent = t; h.style.opacity = 1; clearTimeout(noteT); noteT = setTimeout(() => h.style.opacity = 0, 2200); }
-$('#styleGrid').innerHTML = Object.entries(STYLES).map(([k,s]) =>
-  `<button class="card" data-k="${k}"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#5a3218"/><circle cx="24" cy="24" r="22" fill="none" stroke="#efe8de" stroke-width="2.4"/>${ICONS[k]}</svg><span>${s.name}</span><em>${s.level}</em></button>`).join('');
-for (const b of document.querySelectorAll('#styleGrid .card')) b.onclick = () => startLesson(b.dataset.k, 'watch');
-
-function closeSheets(){ for (const s of ['#cupSheet','#learnSheet','#scrim']) $(s).classList.add('hidden'); }
+function closeSheets(){ for (const s of ['#cupSheet','#scrim']) $(s).classList.add('hidden'); }
 function openSheet(id){ $('#hint').style.opacity = 0; const was = !$(id).classList.contains('hidden'); closeSheets(); if (!was){ $(id).classList.remove('hidden'); $('#scrim').classList.remove('hidden'); } }
 $('#scrim').onclick = closeSheets;
 $('#cupBtn').onclick = () => openSheet('#cupSheet');
-$('#learnBtn').onclick = () => openSheet('#learnSheet');
 $('#etch').onclick = () => setMode(mode === 'etch' ? 'pour' : 'etch');
-$('#newCup').onclick = () => { if (lesson) endLesson(); newCup(); };
+$('#newCup').onclick = () => newCup();
 $('#undo').onclick = undo;
 $('#save').onclick = () => {
   stream[3] = 0; render();
@@ -1176,7 +1091,11 @@ $('#save').onclick = () => {
   const sx = Math.max(0, Math.round(center[0]-size/2)), sy = Math.max(0, Math.round((Hh-center[1])-size/2));
   const sw = Math.min(size, W-sx), sh = Math.min(size, Hh-sy);
   const off = document.createElement('canvas'); off.width = sw; off.height = sh;
-  off.getContext('2d').drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh);
+  const o2 = off.getContext('2d'); o2.drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh);
+  // where the picture came from, in tiny letters in the corner
+  const fs = Math.max(10, Math.round(sw*0.021)), pad = Math.round(sw*0.028);
+  o2.font = `600 ${fs}px Manrope, system-ui, sans-serif`; o2.textAlign = 'right'; o2.textBaseline = 'alphabetic';
+  o2.fillStyle = 'rgba(242,234,223,.5)'; o2.fillText('ktamuly.github.io/latte', sw - pad, sh - pad);
   $('#shotImg').src = off.toDataURL('image/png');
   $('#shot').classList.remove('hidden');
 };
@@ -1186,7 +1105,7 @@ window.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if (k === 'shift') holdHigh = true;
   else if (k === 'e') setMode(mode === 'etch' ? 'pour' : 'etch');
-  else if (k === 'escape'){ closeSheets(); if (lesson) endLesson(); }
+  else if (k === 'escape') closeSheets();
 });
 
 window.addEventListener('keyup', e => { if (e.key === 'Shift') holdHigh = false; });
@@ -1195,11 +1114,13 @@ canvas.addEventListener('webglcontextlost', e => e.preventDefault());
 canvas.addEventListener('webglcontextrestored', () => location.reload());
 
 let rz = 0;
-window.addEventListener('resize', () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(layout); });
+window.addEventListener('resize', () => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => { layout(); applyJugLayout(); }); });
 setMilk('whole'); setFlow(1);
+{ let jm = 'auto'; try { jm = localStorage.getItem('latte-jug') || 'auto'; } catch(_) {} setManual(jm === 'manual', true); }
 { let gi = 1, si = 0;   // speckled classic by default
   try { const g = localStorage.getItem('latte-glaze'), sp = localStorage.getItem('latte-shape'); if (g !== null) gi = +g; if (sp !== null) si = +sp; } catch(_) {}
   cup = CUPS[gi] || CUPS[1]; shape = SHAPES[si] || SHAPES[0]; cupColor = cup.inn; drawCupGrids(); }
+applyJugLayout();
 layout(); newCup();
 requestAnimationFrame(frame);
 }
